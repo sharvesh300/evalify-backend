@@ -8,10 +8,13 @@ import com.evalify.evalifybackend.quiz.service.QuizCourseService
 import com.evalify.evalifybackend.quiz.service.QuizLabService
 import com.evalify.evalifybackend.quiz.service.QuizQuestionService
 import com.evalify.evalifybackend.quiz.service.QuizService
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
@@ -42,6 +45,16 @@ fun removeStudent(@RequestBody studentDTO:UpdateQuizStudentDTO,@PathVariable qui
     @PutMapping("{quizId}/remove-lab")
     fun removeLabFromQuiz(@RequestBody labDTO:UpdateQuizLabDTO,@PathVariable quizId:UUID){
         quizLabService.removeLabToQuiz(labId = labDTO.lab, quizId = quizId)
+    }
+
+    /**
+     * Deletes a quiz by its ID
+     * @param quizId The UUID of the quiz to delete
+     */
+    @DeleteMapping("{quizId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteQuiz(@PathVariable quizId: UUID) {
+        quizService.deleteQuiz(quizId)
     }
 
 
